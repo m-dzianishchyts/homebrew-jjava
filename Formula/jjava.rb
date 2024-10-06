@@ -14,6 +14,6 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    system "jupyter kernelspec install #{Dir.pwd} --name=java --user"
+    system "jupyter kernelspec install #{buildpath} --name=java --user"
   end
 end
