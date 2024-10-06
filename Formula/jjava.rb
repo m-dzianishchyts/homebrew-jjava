@@ -27,13 +27,6 @@ class Jjava < Formula
       puts "Installed files to #{share_kernel}: #{share_kernel.children.map(&:basename).inspect}"
     end
 
-    jupyter_kernel = Pathname.new(File.expand_path("~/.local/share/jupyter/kernels/java"))
-    jupyter_kernel.install share_kernel.children
-
-    if (jupyter_kernel.children.empty?)
-      puts "Warning: No files installed in #{jupyter_kernel}. Check your installation process."
-    else
-      puts "Installed files to #{jupyter_kernel}: #{jupyter_kernel.children.map(&:basename).inspect}"
-    end
+    system "jupyter kernelspec install #[share_kernel] --name=java --user"
   end
 end
