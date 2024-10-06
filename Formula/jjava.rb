@@ -14,9 +14,25 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
+    puts "Current working directory: #{Dir.pwd}"
+    files_to_install = Dir["*"]
+    puts "Files to install: #{files_to_install.inspect}"
+
     share_kernel = share/"jupyter/kernels/java"
-    share_kernel.install Dir["*"]
-    jupyter_kernel = Pathname.new("~/.local/share/jupyter/kernels/java")
+    share_kernel.install files_to_install
+
+    if share_kernel.children.empty?
+      puts "Warning: No files installed in #{share_kernel}. Check your source files."
+    else
+      puts "Installed files to #{share_kernel}: #{share_kernel.children.map(&:basename).inspect}"
+    end
+
+    jupyter_kernel = Pathname.new(File.expand_path("~/.local/share/jupyter/kernels/java")
     jupyter_kernel.install share_kernel.children
-  end
+
+    if (jupyter_kernel.children.empty?)
+      puts "Warning: No files installed in #{jupyter_kernel}. Check your installation process."
+    else
+      puts "Installed files to #{jupyter_kernel}: #{jupyter_kernel.children.map(&:basename).inspect}"
+    end
 end
