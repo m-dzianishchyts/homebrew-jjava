@@ -27,6 +27,6 @@ class Jjava < Formula
       puts "Installed files to #{share_kernel}: #{share_kernel.children.map(&:basename).inspect}"
     end
 
-    system "jupyter kernelspec install #{share_kernel} --name=java --user"
+    puts `jupyter kernelspec install #{share_kernel} --name=java --user --debug`
   end
 end
