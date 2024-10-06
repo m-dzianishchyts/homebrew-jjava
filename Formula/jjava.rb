@@ -13,8 +13,9 @@ class Jjava < Formula
   depends_on "java"
   depends_on "jupyterlab"
 
+  JUPYTER_EXTRA_DATA = "JUPYTER_PATH"
+
   def install
-    JUPYTER_EXTRA_DATA = "JUPYTER_PATH"
     kernel_dir = share/"jupyter/kernels/java"
     kernel_dir.install Dir["*"]
     unless ENV[JUPYTER_EXTRA_DATA].to_s.split(File::PATH_SEPARATOR).include?(kernel_dir.to_s)
