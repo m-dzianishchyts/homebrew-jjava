@@ -5,12 +5,13 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a10/jjava-1.0a10-kernelspec.zip"
-  version "1.0a10"
-  sha256 "dcc4f00d4aa6b9d0afe742c3afa7c99e9bb1b07483969636fdb0b1d575730a1d"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a11/jjava-1.0a11-kernelspec.zip"
+  version "1.0a11"
+  sha256 "6952800b97cbcb7436d29624315ab60f467b8bf804c3916b929ae212d5a9357c"
   license "MIT"
 
-  depends_on jupyterlab
+  depends_on "java"
+  depends_on "jupyterlab"
 
   def install
     system "jupyter kernelspec install #{Dir.pwd} --name=java --user"
