@@ -36,7 +36,7 @@ class Jjava < Formula
       send "y\r"
     EOS
     output = shell_output("expect -f console.exp")
-    assert_match "JJava kernel #{r_version}", output
+    assert_match "JJava kernel #{jjava_version}", output
     assert_match "Hello world!", output
   end
 end
