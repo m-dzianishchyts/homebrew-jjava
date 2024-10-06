@@ -5,9 +5,9 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a11/jjava-1.0a11-kernelspec.zip"
-  version "1.0a11"
-  sha256 "6952800b97cbcb7436d29624315ab60f467b8bf804c3916b929ae212d5a9357c"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a12/jjava-1.0a12-kernelspec.zip"
+  version "1.0a12"
+  sha256 "29330835ed9a5709550eca8cfc7b6d85f7df335bf82699354efd4561f7d68dde"
   license "MIT"
 
   depends_on "java"
@@ -15,6 +15,6 @@ class Jjava < Formula
 
   def install
     libexec.install Dir["*"]
-    system "jupyter kernelspec install #{libexec} --sys-prefix --name=java"
+system "jupyter kernelspec install #{libexec} --sys-prefix --name=java "
   end
 end
