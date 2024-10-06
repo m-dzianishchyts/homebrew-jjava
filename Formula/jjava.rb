@@ -18,5 +18,6 @@ class Jjava < Formula
     kernel_dir.install Dir["*"]
     unless ENV["JUPYTER_CONFIG_PATH"].to_s.split(File::PATH_SEPARATOR).include?(kernel_dir.to_s)
       ENV["JUPYTER_CONFIG_PATH"] = [ENV["JUPYTER_CONFIG_PATH"], kernel_dir].compact.join(File::PATH_SEPARATOR)
+    end
   end
 end
