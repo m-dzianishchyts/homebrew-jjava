@@ -16,6 +16,7 @@ class Jjava < Formula
   def install
     kernel_dir = share/"jupyter/kernels/java"
     kernel_dir.install Dir["*"]
-    ENV["JUPYTER_CONFIG_PATH"] = [ENV["JUPYTER_CONFIG_PATH"], kernel_dir].compact.join(File::PATH_SEPARATOR)
+    unless ENV["JUPYTER_CONFIG_PATH"].to_s.split(File::PATH_SEPARATOR).include?(kernel_dir.to_s)
+      ENV["JUPYTER_CONFIG_PATH"] = [ENV["JUPYTER_CONFIG_PATH"], kernel_dir].compact.join(File::PATH_SEPARATOR)
   end
 end
