@@ -29,7 +29,7 @@ class Jjava < Formula
     (testpath/"console.exp").write <<~EOS
       spawn #{jupyter} console --kernel=java
       expect -timeout 30 "In "
-      send "System.out.println("Hello world!");\r"
+      send 'System.out.println("Hello world!");\r'
       expect -timeout 10 "In "
       send "\u0004"
       expect -timeout 10 "exit"
