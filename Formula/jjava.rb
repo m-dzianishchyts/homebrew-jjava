@@ -5,35 +5,34 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a12/jjava-1.0a12-kernelspec.zip"
-  version "1.0a12"
-  sha256 "29330835ed9a5709550eca8cfc7b6d85f7df335bf82699354efd4561f7d68dde"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a13/jjava-1.0a13-kernelspec.zip"
+  version "1.0a13"
+  sha256 "82b54ce8048332c7952cdd0dd466be9c1ed059ba6e576f9d11e0e0f73e092f51"
   license "MIT"
 
   depends_on "java"
   depends_on "jupyterlab"
-  depends_on "expect" => :test
 
   def install
     libexec.install Dir["*"]
     system "jupyter kernelspec install #{libexec} --sys-prefix --name=java "
   end
 
-  def test
+  test do
     jjava_version = Formula["jjava"].version
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
     ENV["JUPYTER_PATH"] = share/"jupyter"
     
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
-
+    
     (testpath/"console.exp").write <<~EOS
-      spawn #{jupyter} console --kernel=java
-      expect -timeout 30 "In "
-      send "System.out.println(\\\"Hello world!\\\");\r"
-      expect -timeout 10 "In "
-      send "\u0004"
-      expect -timeout 10 "exit"
-      send "y\r"
+    spawn #{jupyter} console --kernel=java
+    expect -timeout 30 "In "
+    send "System.out.println(\\\"Hello world!\\\");\r"
+    expect -timeout 10 "In "
+    send "\u0004"
+    expect -timeout 10 "exit"
+    send "y\r"
     EOS
     output = shell_output("expect -f console.exp")
     assert_match "JJava kernel #{jjava_version}", output
