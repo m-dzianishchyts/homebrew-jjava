@@ -15,9 +15,6 @@ class Jjava < Formula
 
   def install
     libexec.install Dir["*"]
-
-    home_local = ENV["HOME"] + "/.local"
-    p "home_local=#{home_local}"
-    system "jupyter kernelspec install #{libexec} --prefix=#{home_local} --name=java"
+    system "jupyter kernelspec install #{libexec} --sys-prefix --name=java"
   end
 end
