@@ -35,4 +35,5 @@ class Jjava < Formula
     else
       puts "Installed files to #{jupyter_kernel}: #{jupyter_kernel.children.map(&:basename).inspect}"
     end
+  end
 end
