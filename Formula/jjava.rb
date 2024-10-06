@@ -14,19 +14,7 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    puts "Current working directory: #{Dir.pwd}"
-    files_to_install = Dir["*"]
-    puts "Files to install: #{files_to_install.inspect}"
-
-    share_kernel = share/"jupyter/kernels/java"
-    share_kernel.install files_to_install
-
-    if share_kernel.children.empty?
-      puts "Warning: No files installed in #{share_kernel}. Check your source files."
-    else
-      puts "Installed files to #{share_kernel}: #{share_kernel.children.map(&:basename).inspect}"
-    end
-
-    puts `jupyter kernelspec install #{share_kernel} --name=java --sys-prefix --debug`
+    libexec.install Dir["*"]
+    system "jupyter kernelspec install #{libexec} --name=java --sys-prefix"
   end
 end
