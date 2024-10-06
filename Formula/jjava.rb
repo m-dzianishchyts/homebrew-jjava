@@ -17,4 +17,25 @@ class Jjava < Formula
     libexec.install Dir["*"]
     system "jupyter kernelspec install #{libexec} --sys-prefix --name=java "
   end
+
+  def test
+    jjava_version = Formula["jjava"].version
+    jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
+    ENV["JUPYTER_PATH"] = share/"jupyter"
+    
+    assert_match " java ", shell_output("#{jupyter} kernelspec list")
+
+    (testpath/"console.exp").write <<~EOS
+      spawn #{jupyter} console --kernel=java
+      expect -timeout 30 "In "
+      send "System.out.println("Hello world!");\r"
+      expect -timeout 10 "In "
+      send "\u0004"
+      expect -timeout 10 "exit"
+      send "y\r"
+    EOS
+    output = shell_output("expect -f console.exp")
+    assert_match "JJava kernel #{r_version}", output
+    assert_match "Hello world!", output
+  end
 end
