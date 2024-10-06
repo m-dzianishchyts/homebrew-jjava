@@ -12,6 +12,7 @@ class Jjava < Formula
 
   depends_on "java"
   depends_on "jupyterlab"
+  depends_on "expect" => :test
 
   def install
     libexec.install Dir["*"]
