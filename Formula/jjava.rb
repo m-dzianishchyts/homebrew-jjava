@@ -13,16 +13,10 @@ class Jjava < Formula
   depends_on "java"
   depends_on "jupyterlab"
 
-  JUPYTER_EXTRA_DATA = "JUPYTER_PATH"
-
   def install
-    kernel_dir = share/"jupyter/kernels/java"
-    kernel_dir.install Dir["*"]
-    unless ENV[JUPYTER_EXTRA_DATA].to_s.split(File::PATH_SEPARATOR).include?(kernel_dir.to_s)
-      ENV[JUPYTER_EXTRA_DATA] = [ENV[JUPYTER_EXTRA_DATA], kernel_dir].compact.join(File::PATH_SEPARATOR)
-      ohai "#{JUPYTER_EXTRA_DATA} updated to: #{ENV[JUPYTER_EXTRA_DATA]}"
-    else
-      ohai "Kernel path already present in #{JUPYTER_EXTRA_DATA}, no update necessary."
-    end
+    share_kernel = share/"jupyter/kernels/java"
+    share_kernel.install Dir["*"]
+    jupyter_kernel = "/usr/share/jupyter/kernels/java"
+    jupyter_kernel.install Dir["*"]
   end
 end
