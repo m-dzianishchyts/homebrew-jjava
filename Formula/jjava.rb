@@ -14,7 +14,7 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    kernel_dir = share/"jupyter/kernels/java"
+    kernel_dir = Formula["jupyterlab"].opt_libexec/"share/jupyter/kernels/java"
     kernel_dir.install Dir["*"]
   end
 end
