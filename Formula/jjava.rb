@@ -17,6 +17,6 @@ class Jjava < Formula
     share_kernel = share/"jupyter/kernels/java"
     share_kernel.install Dir["*"]
     jupyter_kernel = Pathname.new("/usr/share/jupyter/kernels/java")
-    jupyter_kernel.install Dir["*"]
+    jupyter_kernel.install share_kernel.children
   end
 end
