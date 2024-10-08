@@ -16,11 +16,11 @@ class Jjava < Formula
 
   def install
     libexec.install Dir["*"]
-    system "jupyter kernelspec install #{libexec} --sys-prefix --name=java "
+    sys_prefix = Formula["python"].opt_prefix
+    system "jupyter kernelspec install #{libexec} --prefix=#{sys_prefix} --name=java"
   end
 
   test do
-    jjava_version = Formula["jjava"].version
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
     ENV["JUPYTER_PATH"] = share/"jupyter"
     
@@ -36,7 +36,7 @@ class Jjava < Formula
       send "y\r"
       EOS
     output = shell_output("expect -f console.exp")
-    assert_match "JJava kernel #{jjava_version}", output
+    assert_match "JJava kernel #{version}", output
     assert_match "Hello world!", output
   end
 end
