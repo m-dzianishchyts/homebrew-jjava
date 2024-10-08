@@ -14,10 +14,10 @@ class Jjava < Formula
   depends_on "expect" => :test
 
   def install
-    libexec.install Dir["*"]
-    config = libexec/"kernel.json"
+    libexec.install Dir["*.jar"]
+    config = buildpath/"kernel.json"
     inreplace config, "{resource_dir}", libexec
-    system "jupyter kernelspec install --config=#{config} --sys-prefix --name=java"
+    system "jupyter kernelspec install #{buildpath} --config=#{config} --sys-prefix --name=java"
   end
 
   test do
