@@ -7,10 +7,10 @@ class Jjava < Formula
   homepage "https://github.com/m-dzianishchyts/jjava"
   url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a14/jjava-1.0a14-kernelspec.zip"
   version "1.0a14"
-  sha256 "67ea0d8bb8263bf5d5ad516a392c98e687d638b47115c9845ce094b8372fcd01"
+  sha256 "faae750fa8b5bb353ca38d78d02a86b6cd9e0ec6a095a610210036093bd34d6c"
   license "MIT"
 
-  depends_on "java"
+  depends_on "expect" => :test
   depends_on "jupyterlab"
 
   def install
@@ -32,7 +32,7 @@ class Jjava < Formula
       send "\u0004"
       expect -timeout 10 "exit"
       send "y\r"
-    EOS
+      EOS
     output = shell_output("expect -f console.exp")
     assert_match "JJava kernel #{version}", output
     assert_match "Hello world!", output
@@ -40,7 +40,8 @@ class Jjava < Formula
 
   def caveats
     <<~EOS
-      Although JJava doesn't depend on java, it requires jre>=11 to run. Make sure you have one in your PATH.
+      Although JJava doesn't depend on java, it requires jre>=11 to run.
+      Make sure you have one in your PATH.
     EOS
   end
 end
