@@ -16,7 +16,7 @@ class Jjava < Formula
 
   def install
     libexec.install Dir["*"]
-    sys_prefix = Formula["python"].prefix
+    sys_prefix = `python3 -c "import sys; print(sys.prefix)"`
     system "jupyter kernelspec install #{libexec} --prefix=#{sys_prefix} --name=java"
   end
 
