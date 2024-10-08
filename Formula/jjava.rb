@@ -10,7 +10,7 @@ class Jjava < Formula
   sha256 "82b54ce8048332c7952cdd0dd466be9c1ed059ba6e576f9d11e0e0f73e092f51"
   license "MIT"
 
-  depends_on "java"
+  depends_on "openjdk@11"
   depends_on "jupyterlab"
   depends_on "expect" => :test
 
@@ -21,8 +21,6 @@ class Jjava < Formula
 
   test do
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
-    ENV["JUPYTER_PATH"] = share/"jupyter"
-    
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
     
     (testpath/"console.exp").write <<~EOS
