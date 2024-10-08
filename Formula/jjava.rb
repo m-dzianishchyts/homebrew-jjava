@@ -5,9 +5,9 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a14/jjava-1.0a14-kernelspec.zip"
-  version "1.0a14"
-  sha256 "faae750fa8b5bb353ca38d78d02a86b6cd9e0ec6a095a610210036093bd34d6c"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a15/jjava-1.0a15-kernelspec.zip"
+  version "1.0a15"
+  sha256 "cf48b185febc133b35967228735e350a0631fb22fc67c3cb1af266460bf6c5e2"
   license "MIT"
 
   depends_on "expect" => :test
