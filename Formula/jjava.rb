@@ -14,7 +14,7 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    kernel_path = share/"jupyter/java"
+    kernel_path = share/"jupyter/kernels/java"
     kernel_path.install Dir["*"]
   end
 
