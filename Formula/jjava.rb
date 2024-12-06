@@ -14,7 +14,7 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    libexec.install Dir["*"]
+    bin.install Dir["*"]
   end
 
   test do
