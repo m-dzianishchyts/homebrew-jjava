@@ -14,7 +14,8 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    bin.install Dir["*"]
+    kernel_path = share/"jupyter/java"
+    kernel_path.install Dir["*"]
   end
 
   test do
@@ -36,10 +37,11 @@ class Jjava < Formula
   end
 
   def caveats
+    jupyter_path = share/"jupyter"
     <<~EOS
       The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
-        echo 'export JUPYTER_PATH="$JUPYTER_PATH:#{bin}"' >> ~/.zshrc && source ~/.zshrc (macOS)
-        echo 'export JUPYTER_PATH="$JUPYTER_PATH:#{bin}"' >> ~/.bashrc && source ~/.bashrc (Linux)
+        echo 'export JUPYTER_PATH="$JUPYTER_PATH:#{jupyter_path}"' >> ~/.zshrc && source ~/.zshrc (macOS)
+        echo 'export JUPYTER_PATH="$JUPYTER_PATH:#{jupyter_path}"' >> ~/.bashrc && source ~/.bashrc (Linux)
       Although JJava doesn't depend on java, it requires jre>=11 to run.
       Make sure you have one in your PATH.
     EOS
