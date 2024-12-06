@@ -5,28 +5,43 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a11/jjava-1.0a11-kernelspec.zip"
-  version "1.0a11"
-  sha256 "6952800b97cbcb7436d29624315ab60f467b8bf804c3916b929ae212d5a9357c"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a15/jjava-1.0a15-kernelspec.zip"
+  version "1.0a15"
+  sha256 "cf48b185febc133b35967228735e350a0631fb22fc67c3cb1af266460bf6c5e2"
   license "MIT"
 
-  depends_on "java"
+  depends_on "expect" => :test
   depends_on "jupyterlab"
 
   def install
-    puts "Current working directory: #{Dir.pwd}"
-    files_to_install = Dir["*"]
-    puts "Files to install: #{files_to_install.inspect}"
+    libexec.install Dir["*"]
+  end
 
-    share_kernel = share/"jupyter/kernels/java"
-    share_kernel.install files_to_install
+  test do
+    jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
+    assert_match " java ", shell_output("#{jupyter} kernelspec list")
 
-    if share_kernel.children.empty?
-      puts "Warning: No files installed in #{share_kernel}. Check your source files."
-    else
-      puts "Installed files to #{share_kernel}: #{share_kernel.children.map(&:basename).inspect}"
-    end
+    (testpath/"console.exp").write <<~EOS
+      spawn #{jupyter} console --kernel=java
+      expect -timeout 30 "In "
+      send "System.out.println(\\\"Hello world!\\\");\r"
+      expect -timeout 10 "In "
+      send "\u0004"
+      expect -timeout 10 "exit"
+      send "y\r"
+      EOS
+    output = shell_output("expect -f console.exp")
+    assert_match "JJava kernel #{version}", output
+    assert_match "Hello world!", output
+  end
 
-    puts `jupyter kernelspec install #{share_kernel} --name=java --user --debug`
+  def caveats
+    <<~EOS
+      The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
+        echo 'export JUPYTER_PATH="$JUPYTER_PATH:%{libexec}"' >> ~/.zshrc && source ~/.zshrc (macOS)
+        echo 'export JUPYTER_PATH="$JUPYTER_PATH:%{libexec}"' >> ~/.bashrc && source ~/.bashrc (Linux)
+      Although JJava doesn't depend on java, it requires jre>=11 to run.
+      Make sure you have one in your PATH.
+    EOS
   end
 end
