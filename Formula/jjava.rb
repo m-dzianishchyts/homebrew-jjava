@@ -16,13 +16,24 @@ class Jjava < Formula
     kernel_path = share/"jupyter/kernels/java"
     kernel_path.install Dir["*"]
   end
+  
+  def caveats
+    jupyter_path = share/"jupyter"
+    jupyter_env = "JUPYTER_PATH"
+    <<~EOS
+      The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
+        echo "$#{jupyter_env}" | grep -qE "(^|:)#{jupyter_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.zshrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{jupyter_path}" >> ~/.zshrc && source ~/.zshrc; } (macOS)
+        echo "$#{jupyter_env}" | grep -qE "(^|:)#{jupyter_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.bashrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{jupyter_path}" >> ~/.bashrc && source ~/.bashrc; } (Linux)
+      Although JJava doesn't depend on java, it requires jre>=11 to run.
+      Make sure you have one in your PATH.
+    EOS
+  end
 
   test do
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
 
-    (testpath/"console.exp").write
-    <<~EOS
+    (testpath/"console.exp").write <<~EOS
       spawn #{jupyter} console --kernel=java
       expect -timeout 30 "In "
       send "System.out.println(\"Hello world!\");\r"
@@ -34,17 +45,5 @@ class Jjava < Formula
     output = shell_output("expect -f console.exp")
     assert_match "JJava kernel #{version}", output
     assert_match "Hello world!", output
-  end
-
-  def caveats
-    jupyter_path = share/"jupyter"
-    jupyter_env = "JUPYTER_PATH"
-    <<~EOS
-      The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
-        echo "$#{jupyter_env}" | grep -qE "(^|:)#{jupyter_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.zshrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{jupyter_path}" >> ~/.zshrc && source ~/.zshrc; } (macOS)
-        echo "$#{jupyter_env}" | grep -qE "(^|:)#{jupyter_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.bashrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{jupyter_path}" >> ~/.bashrc && source ~/.bashrc; } (Linux)
-      Although JJava doesn't depend on java, it requires jre>=11 to run.
-      Make sure you have one in your PATH.
-    EOS
   end
 end
