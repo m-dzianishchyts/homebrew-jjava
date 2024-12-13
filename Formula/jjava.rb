@@ -15,7 +15,7 @@ class Jjava < Formula
     kernel_path = share/"jupyter/kernels/java"
     kernel_path.install Dir["*"]
   end
-  
+
   def caveats
     jupyter_path = share/"jupyter"
     jupyter_env = "JUPYTER_PATH"
