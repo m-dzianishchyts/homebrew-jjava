@@ -38,6 +38,7 @@ class Jjava < Formula
 
   def caveats
     jupyter_path = share/"jupyter"
+    jupyter_env = "JUPYTER_PATH"
     <<~EOS
       The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
         echo 'export #{jupyter_env}="${#{jupyter_env}:+$#{jupyter_env}:}#{jupyter_path}"' >> ~/.zshrc && source ~/.zshrc (macOS)
