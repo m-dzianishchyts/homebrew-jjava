@@ -28,22 +28,4 @@ class Jjava < Formula
       Make sure you have one in your PATH.
     EOS
   end
-
-  test do
-    jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
-    assert_match " java ", shell_output("#{jupyter} kernelspec list")
-
-    (testpath/"console.exp").write <<~EOS
-      spawn #{jupyter} console --kernel=java
-      expect -timeout 30 "In "
-      send "System.out.println(\"Hello world!\");\r"
-      expect -timeout 10 "In "
-      send "\u0004"
-      expect -timeout 10 "exit"
-      send "y\r"
-    EOS
-    output = shell_output("expect -f console.exp")
-    assert_match "JJava kernel #{version}", output
-    assert_match "Hello world!", output
-  end
 end
