@@ -9,7 +9,6 @@ class Jjava < Formula
   sha256 "cf48b185febc133b35967228735e350a0631fb22fc67c3cb1af266460bf6c5e2"
   license "MIT"
 
-  depends_on "expect" => :test
   depends_on "jupyterlab"
 
   def install
