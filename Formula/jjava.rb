@@ -19,25 +19,6 @@ class Jjava < Formula
     system "jupyter kernelspec install #{buildpath} --config=#{config} --sys-prefix --name=java"
   end
 
-  test do
-    jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
-    assert_match " java ", shell_output("#{jupyter} kernelspec list")
-
-    (testpath/"console.exp").write
-    <<~EOS
-      spawn #{jupyter} console --kernel=java
-      expect -timeout 30 "In "
-      send "System.out.println(\"Hello world!\");\r"
-      expect -timeout 10 "In "
-      send "\u0004"
-      expect -timeout 10 "exit"
-      send "y\r"
-    EOS
-    output = shell_output("expect -f console.exp")
-    assert_match "JJava kernel #{version}", output
-    assert_match "Hello world!", output
-  end
-
   def caveats
     kernel_path = share/"jupyter"
     jupyter_env = "JUPYTER_PATH"
@@ -48,5 +29,23 @@ class Jjava < Formula
       Although JJava doesn't depend on java, it requires jre>=11 to run.
       Make sure you have one in your PATH.
     EOS
+  end
+
+  test do
+    jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
+    assert_match " java ", shell_output("#{jupyter} kernelspec list")
+
+    (testpath/"console.exp").write <<~EOS
+      spawn #{jupyter} console --kernel=java
+      expect -timeout 30 'In '
+      send 'System.out.println("Hello world!");\r'
+      expect -timeout 10 'In '
+      send '\u0004'
+      expect -timeout 10 'exit'
+      send 'y\r'
+    EOS
+    output = shell_output("expect -f console.exp")
+    assert_match "JJava kernel #{version}", output
+    assert_match "Hello world!", output
   end
 end
