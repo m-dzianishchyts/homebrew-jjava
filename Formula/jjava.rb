@@ -37,12 +37,12 @@ class Jjava < Formula
 
     (testpath/"console.exp").write <<~EOS
       spawn #{jupyter} console --kernel=java
-      expect -timeout 30 'In '
-      send 'System.out.println("Hello world!");\r'
-      expect -timeout 10 'In '
-      send '\u0004'
-      expect -timeout 10 'exit'
-      send 'y\r'
+      expect -timeout 30 "In "
+      send {System.out.println("Hello world!");\r}
+      expect -timeout 10 "In "
+      send "\u0004"
+      expect -timeout 10 "exit"
+      send "y\r"
     EOS
     output = shell_output("expect -f console.exp")
     assert_match "JJava kernel #{version}", output
