@@ -43,8 +43,8 @@ class Jjava < Formula
     jupyter_env = "JUPYTER_PATH"
     <<~EOS
     The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
-      echo "$#{jupyter_env}" | grep -qE "(^|:)#{kernel_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.zshrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{kernel_path}" >> ~/.zshrc && source ~/.zshrc; } (macOS)
-      echo "$#{jupyter_env}" | grep -qE "(^|:)#{kernel_path}(:|$)" || { sed -i '/^export #{jupyter_env}=/d' ~/.bashrc; echo "export #{jupyter_env}=${#{jupyter_env}:+$#{jupyter_env}:}#{kernel_path}" >> ~/.bashrc && source ~/.bashrc; } (Linux)
+      grep -q '^export #{jupyter_env}=' ~/.zshrc && sed -i '/^export #{jupyter_env}=/ s|$|:#{kernel_path}|' ~/.zshrc || echo 'export #{jupyter_env}=#{kernel_path}' >> ~/.zshrc; source ~/.zshrc (macOS)
+      grep -q '^export #{jupyter_env}=' ~/.bashrc && sed -i '/^export #{jupyter_env}=/ s|$|:#{kernel_path}|' ~/.bashrc || echo 'export #{jupyter_env}=#{kernel_path}' >> ~/.bashrc; source ~/.bashrc (Linux)
     Although JJava doesn't depend on java, it requires jre>=11 to run.
     Make sure you have one in your PATH.
     EOS
