@@ -20,13 +20,12 @@ class Jjava < Formula
 
   def caveats
     kernel_path = share/"jupyter"
-    jupyter_env = "JUPYTER_PATH"
     <<~EOS
-      The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
-        grep -q '^export #{jupyter_env}=' ~/.zshrc && sed -i '/^export #{jupyter_env}=/ s|$|:#{kernel_path}|' ~/.zshrc || echo 'export #{jupyter_env}=#{kernel_path}' >> ~/.zshrc; source ~/.zshrc (macOS)
-        grep -q '^export #{jupyter_env}=' ~/.bashrc && sed -i '/^export #{jupyter_env}=/ s|$|:#{kernel_path}|' ~/.bashrc || echo 'export #{jupyter_env}=#{kernel_path}' >> ~/.bashrc; source ~/.bashrc (Linux)
-      Although JJava doesn't depend on java, it requires jre>=11 to run.
-      Make sure you have one in your PATH.
+    The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
+      echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.zshrc; source ~/.zshrc (macOS)
+      echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.bashrc; source ~/.bashrc (Linux)
+    Although JJava doesn't depend on java, it requires jre>=11 to run.
+    Make sure you have one in your PATH.
     EOS
   end
 
