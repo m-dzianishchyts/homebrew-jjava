@@ -15,7 +15,7 @@ class Jjava < Formula
     libexec.install Dir["*.jar"]
     config = buildpath/"kernel.json"
     inreplace config, "{resource_dir}", libexec
-    (share/"jupyter/kernels/java/kernel.json").install config
+    cp config, share/"jupyter/kernels/java/kernel.json"
   end
 
   def caveats
