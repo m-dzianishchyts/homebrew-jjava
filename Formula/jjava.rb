@@ -14,8 +14,10 @@ class Jjava < Formula
   depends_on "jupyterlab"
 
   def install
-    kernel_path = share/"jupyter/java"
-    kernel_path.install Dir["*"]
+    libexec.install Dir["*.jar"]
+    config = buildpath/"kernel.json"
+    inreplace config, "{resource_dir}", libexec
+    system "jupyter kernelspec install #{buildpath} --config=#{config} --sys-prefix --name=java"
   end
 
   test do
