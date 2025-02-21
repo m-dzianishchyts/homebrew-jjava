@@ -16,7 +16,7 @@ class Jjava < Formula
     libexec.install Dir["*.jar"]
     config = buildpath/"kernel.json"
     inreplace config, "{resource_dir}", libexec
-    system "jupyter kernelspec install #{buildpath} --config=#{config} --sys-prefix --name=java"
+    system "jupyter", "kernelspec", "install", "#{buildpath}", "--config=#{config}", "--sys-prefix", "--name=java"
   end
 
   def caveats
