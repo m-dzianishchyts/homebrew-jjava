@@ -13,7 +13,7 @@ class Jjava < Formula
 
   def install
     libexec.install Dir["*.jar"]
-    share = buildpath/"kernel.json"
+    config = buildpath/"kernel.json"
     inreplace config, "{resource_dir}", libexec
     (share/"kernel.json").install config
   end
