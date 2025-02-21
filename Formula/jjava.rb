@@ -10,13 +10,11 @@ class Jjava < Formula
   license "MIT"
 
   depends_on "expect" => :test
-  depends_on "jupyterlab"
 
   def install
     libexec.install Dir["*.jar"]
     config = buildpath/"kernel.json"
     inreplace config, "{resource_dir}", libexec
-    system "jupyter", "kernelspec", "install", buildpath, "--config=#{config}", "--sys-prefix", "--name=java"
   end
 
   def caveats
