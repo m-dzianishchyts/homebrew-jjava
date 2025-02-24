@@ -5,8 +5,8 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a15/jjava-1.0a15-kernelspec.zip"
-  sha256 "cf48b185febc133b35967228735e350a0631fb22fc67c3cb1af266460bf6c5e2"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a16/jjava-1.0a16-kernelspec.zip"
+  sha256 "1a8f903293146c4905b56a9f163a4e4b98833d7e6c4eaf2f508e272f7e105a1e"
   license "MIT"
 
   depends_on "expect" => :test
@@ -19,13 +19,15 @@ class Jjava < Formula
   end
 
   def caveats
-    kernel_path = share/"jupyter"
     <<~EOS
-      The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
-        echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.zshrc; source ~/.zshrc (macOS)
-        echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.bashrc; source ~/.bashrc (Linux)
-      Although JJava doesn't depend on java, it requires jre>=11 to run.
-      Make sure you have one in your PATH.
+      kernel_path = share/"jupyter"
+      <<~EOS
+        The installation of the Homebrew package takes place in an isolated environment, so ensure JJava visibility by running:
+          echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.zshrc; source ~/.zshrc (macOS)
+          echo 'export JUPYTER_PATH="#{kernel_path}:$JUPYTER_PATH"' >> ~/.bashrc; source ~/.bashrc (Linux)
+        Although JJava doesn't depend on java, it requires jre>=11 to run.
+        Make sure you have one in your PATH.
+      EOS
     EOS
   end
 
