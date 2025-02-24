@@ -31,7 +31,7 @@ class Jjava < Formula
 
   test do
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
-    shell_output("#{jupyter} --paths")
+    puts shell_output("#{jupyter} --paths")
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
 
     (testpath/"console.exp").write <<~EOS
