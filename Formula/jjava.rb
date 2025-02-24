@@ -5,8 +5,8 @@
 class Jjava < Formula
   desc "Jupyter kernel for executing java code"
   homepage "https://github.com/m-dzianishchyts/jjava"
-  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a16/jjava-1.0a16-kernelspec.zip"
-  sha256 "1a8f903293146c4905b56a9f163a4e4b98833d7e6c4eaf2f508e272f7e105a1e"
+  url "https://github.com/m-dzianishchyts/jjava/releases/download/1.0a17/jjava-1.0a17-kernelspec.zip"
+  sha256 "c3d4dfa865998ca22b55b282f9f0c71b70290cb5023508a21000682d3b5ec6d3"
   license "MIT"
 
   depends_on "expect" => :test
@@ -32,7 +32,6 @@ class Jjava < Formula
   test do
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
     ENV["JUPYTER_PATH"] = share/"jupyter"
-    puts shell_output("#{jupyter} --paths")
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
 
     (testpath/"console.exp").write <<~EOS
