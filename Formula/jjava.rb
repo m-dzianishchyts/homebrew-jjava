@@ -31,6 +31,7 @@ class Jjava < Formula
 
   test do
     jupyter = Formula["jupyterlab"].opt_bin/"jupyter"
+    puts shell_output('"$JUPYTER_PATH"')
     puts shell_output("#{jupyter} --paths")
     assert_match " java ", shell_output("#{jupyter} kernelspec list")
 
